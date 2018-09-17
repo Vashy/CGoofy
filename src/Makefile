@@ -5,8 +5,8 @@ C_DIR=./sources
 H_DIR=./headers
 OUT_DIR=../bin
 
-HEADERS=${H_DIR}/list.h
-SOURCES=${C_DIR}/list.c main.c
+HEADERS=$(H_DIR)/list.h
+SOURCES=$(C_DIR)/list.c main.c
 OBJ=$(OUT_DIR)/main.o $(OUT_DIR)/list.o 
 
 MKDIR_P = mkdir -p
@@ -21,7 +21,7 @@ $(OUT_DIR)/main.o: main.c
 	$(CC) $(CCFLAGS) -o $(OUT_DIR)/main.o -c main.c
  
 $(OUT_DIR)/list.o: ${C_DIR}/list.c ${H_DIR}/list.h
-	$(CC) $(CCFLAGS) -o $(OUT_DIR)/list.o -c ${C_DIR}/list.c
+	$(CC) $(CCFLAGS) -o $(OUT_DIR)/list.o -c $(C_DIR)/list.c
 
 
 .PHONY: clean directories
