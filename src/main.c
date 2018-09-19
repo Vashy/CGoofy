@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "headers/list.h"
+#include "headers/vec.h"
 
 void printArr(void*, size_t);
 
@@ -57,7 +58,34 @@ int main(int argc, char const *argv[]) {
     if (node2 == NULL)
         printf("Not found a Node containinig 12321: %p\n", node2);
 
+    // destroy_list(&l1);
     destroy_list(&l2);
+
+
+    // ------
+    // VECTOR
+    // ------
+
+    Vec* v = (Vec*)malloc(sizeof(Vec));
+    *v = new_int_vec_capacity(9);
+    for (int i = 0; i < 10; i++) {
+        // printf("\niter %d", i);
+        vec_push_back_int(v, i);
+    }
+
+    printf("\n");
+    fprint_vec_int(stdout, v);
+
+    vec_pop_back(v);
+    vec_pop_back(v);
+    vec_pop_back(v);
+    vec_push_back_int(v, 34);
+    vec_push_back_int(v, 234);
+
+    fprint_vec_int(stdout, v);
+
+    delete_vec_int(v);
+    free(v);
 }
 
 void printArr(void* arr, size_t size) {
