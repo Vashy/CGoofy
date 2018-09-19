@@ -1,12 +1,10 @@
-#ifndef __LIST_C__
-#define __LIST_C__
-
 #include "../headers/list.h"
 #include <stdlib.h>
 
 // |----|
 // |Node|
 // |----|
+
 
 void destroy_node(Node* node) {
     // printf("Destroying node with data = %d ...\n", *(int*)(node->data)); // for Debugging
@@ -64,10 +62,10 @@ int push_back(List* list, void* data) {
 
     // case empty list
     if (list->last == NULL) {
-        //single Node, it does not have any prev or next node 
+        //single Node, it does not have any prev or next node
         new_node->prev = NULL;
         new_node->next = NULL;
- 
+
         list->first = list->last = new_node;
         return 0; // All ok
     }
@@ -92,7 +90,7 @@ int push_front(List* list, void* data) {
 
     // case empty list
     if (list->first == NULL) {
-        
+
         new_node->next = new_node->prev = NULL;
         list->first = list->last = new_node;
         return 0;
@@ -128,7 +126,7 @@ int push_front_int(List* list, int data) {
 int push_back_char(List* list, char data) {
     char* val = (char*)malloc(sizeof(char));
     *val = data;
-    if (val == NULL) 
+    if (val == NULL)
         return -1;
     return push_back(list, val);
 }
@@ -162,6 +160,50 @@ int pop_front(List* list) {
     return 0;
 }
 
+// -------
+// Utility
+// -------
+
+int contains_int(List* list, int data) {
+
+    // temp node
+    Node* node = list->first;
+
+    int steps = 0; //number of steps
+    while (node != NULL) {
+        steps++;
+        if (*(int*)node->data == data)
+            return steps;
+        node = node->next;
+    }
+    return 0;
+}
+
+Node* fetch_int(List* list, int data) {
+    // temp node
+    Node* node = list->first;
+
+    while (node != NULL) {
+        if (*(int*)node->data == data)
+            break; // found!
+        node = node->next;
+    }
+
+    // in case of no match, NULL will be returned
+    return node;
+}
+
+Node* join_lists(List* list1, List* list2) {
+    // l1->last points to l2->first. l1->last will be l2->last
+    list1->last->next = list2->first;
+    list1->last = list2->last;
+    return list1->first;
+}
+
+
+// ------
+// Memory
+// ------
 
 void destroy_list(List* list) {
     while (list->first != NULL) {
@@ -193,5 +235,3 @@ void fprint_list_int_backward(FILE* stream, List list) {
     }
     fprintf(stream, "\n");
 }
-
-#endif
